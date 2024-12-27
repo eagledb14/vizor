@@ -33,7 +33,7 @@ pub fn (app &App) post(mut ctx Context, name string) veb.Result {
 
 @["/rss"]
 pub fn (app &App) rss(mut ctx Context) veb.Result {
-	return ctx.text("what")
+	return ctx.text(get_rss_feed(app.pages))
 }
 
 pub fn run() {

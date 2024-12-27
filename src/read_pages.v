@@ -27,8 +27,8 @@ pub fn new_pages() &Pages {
 }
 
 fn (mut p Pages) walk_pages() {
-	p.home = os.read_file(os.join_path(".", "pages", "home.md")) or {""}
-	p.links = os.read_file(os.join_path(".", "pages", "links.md")) or {""}
+	p.home = os.read_file(os.join_path(".", "pages", "home.md")) or {println(err); ""}
+	p.links = os.read_file(os.join_path(".", "pages", "links.md")) or {println(err); ""}
 
 	mut posts := map[string]Post{}
 	mut post_list := []string{}
