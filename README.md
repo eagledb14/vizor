@@ -5,7 +5,7 @@ The simplest implementation of a blog website that I could think of, written in 
 ## Installation
 
 1. Install vlang on your computer
-2. Run ```v v run . ``` or ```v v . ```
+2. Run ``` v run . ``` or ``` v . ```
 
 ## Use
 
