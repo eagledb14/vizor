@@ -12,11 +12,13 @@ pub struct App {
 
 pub fn (app &App) index(mut ctx Context) veb.Result {
 	content := app.pages.read_home()
+	title := "Home"
 	return ctx.html($tmpl("./templates/index.html"))
 }
 
 pub fn (app &App) links(mut ctx Context) veb.Result {
 	content := app.pages.read_links()
+	title := "Links"
 	return ctx.html($tmpl("./templates/index.html"))
 }
 
@@ -28,6 +30,7 @@ pub fn (app &App) posts(mut ctx Context) veb.Result {
 @["/post/:name"]
 pub fn (app &App) post(mut ctx Context, name string) veb.Result {
 	content := app.pages.read_post(name)
+	title := name
 	return ctx.html($tmpl("./templates/index.html"))
 }
 

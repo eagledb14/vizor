@@ -27,19 +27,19 @@ pub fn get_rss_feed(pages &Pages) string {
 	rss.body("A simple blog written by a simple developer")
 	rss.close()
 
-	for post_name in pages.posts() {
+	for post in pages.posts() {
 		rss.open("item", {})
 
 		rss.open("title", {})
-		rss.body(post_name)
+		rss.body(post.name)
 		rss.close()
 
 		rss.open("link", {})
-		rss.body("https://blackman.zip/post/${post_name}")
+		rss.body("https://blackman.zip/post/${post.name}")
 		rss.close()
 
 		rss.open("description", {})
-		rss.body(markdown.to_plain(pages.posts[post_name].content))
+		rss.body(markdown.to_plain(post.content))
 		rss.close()
 
 		rss.close()

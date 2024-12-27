@@ -9,13 +9,13 @@ mut:
 	home string
 	links string
 	posts map[string]Post
-	post_list []string
+	post_list []Post
 }
 
 struct Post {
 pub:
-	path string
-	time i64
+	name string
+	time string
 	content string
 }
 
@@ -31,7 +31,7 @@ fn (mut p Pages) walk_pages() {
 	p.links = os.read_file(os.join_path(".", "pages", "links.md")) or {println(err); ""}
 
 	mut posts := map[string]Post{}
-	mut post_list := []string{}
+	mut post_list := []Post{}
 
 	path := os.join_path(".", "pages", "posts")
 	entries := os.ls(path) or { return }
@@ -39,17 +39,19 @@ fn (mut p Pages) walk_pages() {
 	for entry in entries {
 		entry_path := os.join_path(path, entry)
 		if os.is_file(entry_path) {
-			post_list << entry
-			posts[entry] = Post{
-				path: entry_path,
-				time: os.file_last_mod_unix(entry_path)
+			new_post := Post{
+				name: entry,
+				time: time.unix(os.file_last_mod_unix(entry_path)).format_ss()
 				content: os.read_file(entry_path) or {""}
 			}
+
+			posts[entry] = new_post
+			post_list << new_post
 		}
 	}
 
-	post_list.sort_with_compare(fn [posts](a &string, b &string) int {
-		if posts[a].time > posts[b].time {
+	post_list.sort_with_compare(fn (a &Post, b &Post) int {
+		if a.time > b.time {
 			return -1
 		} else {
 			return 1
@@ -79,6 +81,6 @@ pub fn (p Pages) read_post(page string) string {
 	return markdown.to_html(p.posts[page].content)
 }
 
-pub fn (p Pages) posts() []string {
+pub fn (p Pages) posts() []Post {
 	return p.post_list
 }
