@@ -1,0 +1,7 @@
+@include "header"
+        @for val in content
+                <article class="clickable" hx-get="/post/$val" hx-target="body" hx-push-url="true">
+                        $val
+                </article>
+        @end
+@include "footer"
